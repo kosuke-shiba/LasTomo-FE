@@ -8,6 +8,7 @@ const nextConfig = {
     domains: ["localhost"], // 必要に応じて許可する画像ドメインを追加
     unoptimized: true, // 静的エクスポート時に画像最適化を無効化（オプション）
   },
+  output: 'standalone',
 };
 
 module.exports = nextConfig;

@@ -1,4 +1,4 @@
-//import { Message } from '@/types/chat';
+import { Message } from '@/types/chat';
 
 export async function sendChatMessage(message: string, history: Message[]) {
   try {

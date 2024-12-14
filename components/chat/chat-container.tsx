@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChatInput } from './chat-input';
 import { ChatMessages } from './chat-messages';
-import { Message } from '@/types/chat';
+//import { Message } from '@/types/chat';
 import { sendChatMessage } from '@/lib/chat-service';
 
 export function ChatContainer() {

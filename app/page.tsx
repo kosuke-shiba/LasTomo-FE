@@ -21,7 +21,7 @@ export default function Home() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:8000/api/genblog", {
+    const res = await fetch("https://tech0-gen-8-step3-app-py-1.azurewebsites.net/api/genblog", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

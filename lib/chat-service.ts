@@ -2,7 +2,7 @@ import { Message } from '@/types/chat';
 
 export async function sendChatMessage(message: string, history: Message[]) {
   try {
-    const response = await fetch('http://localhost:5001/api/chat', {
+    const response = await fetch('https://tech0-gen-8-step3-app-py-11.azurewebsites.net/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 
 export default function ProfilePage() {
@@ -23,8 +22,38 @@ export default function ProfilePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement form submission
-    console.log(formData);
+
+    try {
+      const response = await fetch("http://localhost:5001/api/save-profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert("プロフィールが正常に保存されました！");
+        // 必要に応じてフォームをリセット
+        setFormData({
+          username: '',
+          nickname: '',
+          email: '',
+          gender: '',
+          age: '',
+          occupation: '',
+          familyStructure: '',
+          location: '',
+          nationality: '',
+          religion: ''
+        });
+      } else {
+        alert("プロフィールの保存に失敗しました。もう一度お試しください。");
+      }
+    } catch (error) {
+      console.error("プロフィール保存時のエラー:", error);
+      alert("エラーが発生しました。後でもう一度お試しください。");
+    }
   };
 
   return (

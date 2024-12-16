@@ -7,6 +7,7 @@ import {
   LineElement,
   Tooltip,
   Legend,
+  ChartData,
 } from "chart.js";
 import { Radar } from "react-chartjs-2";
 import { useState, useEffect } from "react";
@@ -15,9 +16,25 @@ import { Button } from "@/components/ui/button";
 // 必要なモジュールを登録
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Tooltip, Legend);
 
-export default function ValuesPage() {
-  const [chartData, setChartData] = useState(null);
+// レーダーチャートのデータ型
+type RadarChartData = ChartData<"radar">;
 
+export default function ValuesPage() {
+  // 初期値を空のデータオブジェクトに設定し型定義
+  const [chartData, setChartData] = useState<RadarChartData>({
+    labels: [],
+    datasets: [
+      {
+        label: "",
+        data: [],
+        backgroundColor: "rgba(75,192,192,0.2)",
+        borderColor: "rgba(75,192,192,1)",
+        borderWidth: 2,
+      },
+    ],
+  });
+
+  // APIからデータを取得しチャートデータをセット
   useEffect(() => {
     fetch("http://localhost:5001/api/values")
       .then((response) => response.json())
@@ -34,15 +51,17 @@ export default function ValuesPage() {
             },
           ],
         });
-      });
+      })
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  if (!chartData) {
+  if (!chartData || chartData.labels?.length === 0) {
     return <p className="text-center">データを読み込んでいます...</p>;
   }
 
+  // 次のページへの遷移
   const handleNextPage = () => {
-    window.location.href = "/next-page"; // 次のページへの遷移
+    window.location.href = "/next-page";
   };
 
   return (

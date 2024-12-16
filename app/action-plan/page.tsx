@@ -1,34 +1,45 @@
 "use client";
 
-export default function ActionPlan() {
+import { useEffect, useState } from "react";
+import { Card } from "@/components/ui/card";
+
+export default function ActionPlanPage() {
+  const [loading, setLoading] = useState(true);
+  const [actionPlan, setActionPlan] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchActionPlan = async () => {
+      try {
+        const response = await fetch("http://localhost:5001/api/action-plan");
+        const data = await response.json();
+        if (data.action_plan) {
+          setActionPlan(data.action_plan);
+        } else {
+          setActionPlan("アクションプランの取得に失敗しました。");
+        }
+      } catch (error) {
+        console.error("Error fetching action plan:", error);
+        setActionPlan("エラーが発生しました。後でもう一度お試しください。");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchActionPlan();
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-white">
-          次のアクションプラン
-        </h1>
-
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-          <p className="text-gray-700 dark:text-gray-300 text-lg">
-            ここでは、次のアクションプランについて計画を立てることができます。
-          </p>
-
-          <ul className="list-disc pl-5 mt-4 space-y-2 text-gray-700 dark:text-gray-300">
-            <li>目標を設定する</li>
-            <li>達成期限を決める</li>
-            <li>必要なリソースを特定する</li>
-            <li>進捗状況を確認する</li>
-          </ul>
-
-          <div className="mt-6">
-            <button
-              className="w-full p-2 bg-primary text-white rounded hover:bg-primary-dark"
-            >
-              アクションプランを保存
-            </button>
+    <div className="container mx-auto max-w-4xl p-4 h-[calc(100vh-2rem)]">
+      <Card className="h-full p-6">
+        {loading ? (
+          <p className="text-lg text-center">アクションプランを作成中です。しばらくお待ちください。</p>
+        ) : (
+          <div className="prose max-w-none">
+            <h2 className="text-2xl font-bold mb-4">提案されたアクションプラン</h2>
+            <div dangerouslySetInnerHTML={{ __html: actionPlan || "" }} />
           </div>
-        </div>
-      </div>
+        )}
+      </Card>
     </div>
   );
 }

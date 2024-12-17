@@ -36,7 +36,7 @@ export default function ValuesPage() {
 
   // APIからデータを取得しチャートデータをセット
   useEffect(() => {
-    fetch("http://localhost:5001/api/values")
+    fetch("https://tech0-gen-8-step3-app-py-11.azurewebsites.net/api/values")
       .then((response) => response.json())
       .then((data) => {
         setChartData({

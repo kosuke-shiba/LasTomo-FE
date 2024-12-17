@@ -24,7 +24,7 @@ export default function ProfilePage() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5001/api/save-profile", {
+      const response = await fetch("https://tech0-gen-8-step3-app-py-11.azurewebsites.net/api/save-profile", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

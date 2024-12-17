@@ -10,7 +10,7 @@ export default function ActionPlanPage() {
   useEffect(() => {
     const fetchActionPlan = async () => {
       try {
-        const response = await fetch("http://localhost:5001/api/action-plan");
+        const response = await fetch("https://tech0-gen-8-step3-app-py-11.azurewebsites.net/api/action-plan");
         const data = await response.json();
         if (data.action_plan) {
           setActionPlan(data.action_plan);
